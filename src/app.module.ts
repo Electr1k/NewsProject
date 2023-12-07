@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import {ConfigModule} from "@nestjs/config";
 import {User} from "./users/users.model";
 import { AuthModule } from './auth/auth.module';
+import { NewsModule } from './news/news.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { AuthModule } from './auth/auth.module';
           autoLoadModels: true
       }),
       UsersModule,
-      AuthModule
+      AuthModule,
+      NewsModule
   ],
   controllers: [],
   providers: [],
