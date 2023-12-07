@@ -8,11 +8,6 @@ export class UsersController {
     constructor(private usersService: UsersService) {}
 
 
-    @Post()
-    create(@Body() userDto: CreateUserDto){
-        return this.usersService.createUser(userDto);
-    }
-
     @Get()
     getAll(){
         return this.usersService.getAllUsers()
@@ -21,5 +16,15 @@ export class UsersController {
     @Post('setRole/:id/:role')
     setRole(@Param('id') id: number, @Param('role') role: number){
         return this.usersService.setRoleUser(id, role)
+    }
+
+    @Post('/update/:id')
+    updateUser(@Param('id') id: number, @Body() dto: CreateUserDto){
+        return this.usersService.updateUser(id, dto);
+    }
+
+    @Get('/:id')
+    getUserById(@Param('id') id: number){
+        return this.usersService.getUserById(id);
     }
 }

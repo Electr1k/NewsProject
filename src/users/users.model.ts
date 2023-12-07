@@ -20,4 +20,9 @@ export class User extends Model<User, UserCreationAttrs>{
     @Column({type: DataType.STRING, allowNull: null})
     password: string;
 
+    @Column({type: DataType.STRING, allowNull: true, defaultValue: null})
+    image: string;
+
+    @Column({type: DataType.STRING, allowNull: false})
+    name: string;
 }
