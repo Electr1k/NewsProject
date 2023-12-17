@@ -1,16 +1,23 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-
+import * as path from  'path'
 import { UsersModule } from './users/users.module';
 import {ConfigModule} from "@nestjs/config";
 import {User} from "./users/users.model";
 import { AuthModule } from './auth/auth.module';
 import { NewsModule } from './news/news.module';
+import { FilesModule } from './files/files.module';
+import {News} from "./news/news.model";
+import {ServeStaticModule} from "@nestjs/serve-static";
+import { ReactionsModule } from './reactions/reactions.module';
 
 @Module({
   imports: [
       ConfigModule.forRoot({
           envFilePath: '.' + process.env.NODE_ENV + '.env'
+      }),
+      ServeStaticModule.forRoot({
+          rootPath: path.resolve(__dirname, 'static'),
       }),
       SequelizeModule.forRoot({
           dialect: 'postgres',
@@ -19,12 +26,14 @@ import { NewsModule } from './news/news.module';
           username: process.env.POSTGRES_USER,
           password: process.env.POSTGRES_PASSWORD,
           database: process.env.POSTGRES_DB,
-          models: [User],
+          models: [User, News],
           autoLoadModels: true
       }),
       UsersModule,
       AuthModule,
-      NewsModule
+      NewsModule,
+      FilesModule,
+      ReactionsModule
   ],
   controllers: [],
   providers: [],

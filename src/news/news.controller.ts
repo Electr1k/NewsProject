@@ -1,14 +1,18 @@
-import {Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, UploadedFile, UseInterceptors} from '@nestjs/common';
 import {NewsService} from "./news.service";
 import {CreateNewsDto} from "./dto/CreateNewsDto";
+import {FilesService} from "../files/files.service";
+import {FileInterceptor} from "@nestjs/platform-express";
 
 @Controller('news')
 export class NewsController {
     constructor(private newsService: NewsService) {}
 
     @Post()
-    create(@Body() newsDto: CreateNewsDto){
-        return this.newsService.createNews(newsDto);
+    @UseInterceptors(FileInterceptor('image'))
+    create(@Body() newsDto: CreateNewsDto,
+           @UploadedFile() image){
+        return this.newsService.createNews(newsDto, image);
     }
 
     @Get()

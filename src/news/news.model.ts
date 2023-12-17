@@ -1,7 +1,11 @@
-import {Column, DataType, Model, Table} from "sequelize-typescript";
+import {BelongsTo, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
+import {User} from "../users/users.model";
 
 interface NewsCreationAttrs{
-
+    title: string;
+    description: string;
+    userId: number;
+    image: string;
 }
 
 @Table({tableName: 'news'})
@@ -18,6 +22,10 @@ export class News extends Model<News, NewsCreationAttrs>{
     @Column({type: DataType.STRING, allowNull: true, defaultValue: null})
     image: string;
 
-    @Column({type: DataType.INTEGER, allowNull: true, defaultValue: null})
-    creator: number;
+    @ForeignKey( () => User)
+    @Column({type: DataType.INTEGER})
+    userId: number;
+
+    @BelongsTo( () => User)
+    creator: User
 }
