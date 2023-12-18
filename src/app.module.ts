@@ -10,7 +10,8 @@ import { FilesModule } from './files/files.module';
 import {News} from "./news/news.model";
 import {ServeStaticModule} from "@nestjs/serve-static";
 import { ReactionsModule } from './reactions/reactions.module';
-
+import {Reactions} from "./reactions/reactions.model";
+import {NewsReactions} from "./reactions/news-reactions.model";
 @Module({
   imports: [
       ConfigModule.forRoot({
@@ -26,7 +27,7 @@ import { ReactionsModule } from './reactions/reactions.module';
           username: process.env.POSTGRES_USER,
           password: process.env.POSTGRES_PASSWORD,
           database: process.env.POSTGRES_DB,
-          models: [User, News],
+          models: [User, News, Reactions, NewsReactions],
           autoLoadModels: true
       }),
       UsersModule,

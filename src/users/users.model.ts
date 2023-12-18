@@ -1,5 +1,6 @@
-import {Column, DataType, ForeignKey, HasMany, Model, Table} from "sequelize-typescript";
+import {BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, Table} from "sequelize-typescript";
 import {News} from "../news/news.model";
+import {NewsReactions} from "../reactions/news-reactions.model";
 
 interface UserCreationAttrs{
     email: string;
@@ -7,7 +8,10 @@ interface UserCreationAttrs{
     role: number
 }
 
-@Table({tableName: 'users'})
+@Table({tableName: 'users', defaultScope: {  attributes: { exclude: ['password'] }}, scopes: {
+        withPassword: {}
+    }}
+)
 export class User extends Model<User, UserCreationAttrs>{
     @Column({type: DataType.INTEGER, unique: true, autoIncrement:true, primaryKey: true})
     id: number;
@@ -29,4 +33,7 @@ export class User extends Model<User, UserCreationAttrs>{
 
     @HasMany( () => News)
     createdNews: News[];
+
+    @HasMany(() => NewsReactions)
+    reactions: NewsReactions[];
 }

@@ -3,6 +3,9 @@ import {NewsService} from "./news.service";
 import {CreateNewsDto} from "./dto/CreateNewsDto";
 import {FilesService} from "../files/files.service";
 import {FileInterceptor} from "@nestjs/platform-express";
+import {SetReactionDto} from "../reactions/dto/SetReactionDto";
+import {CreateReactionDto} from "../reactions/dto/CreateReactionDto";
+import {CreateReactionOnNewsDto} from "../reactions/dto/CreateReactionOnNewsDto";
 
 @Controller('news')
 export class NewsController {
@@ -32,6 +35,12 @@ export class NewsController {
 
     @Post('/update/:id')
     updateNews(@Param('id') id: number, @Body() newsDto : CreateNewsDto): Promise<boolean>{
+        console.log(newsDto.title)
         return this.newsService.updateNews(id, newsDto);
+    }
+
+    @Post("/reaction")
+    setReaction(@Body() dto: CreateReactionOnNewsDto){
+        return this.newsService.setReactionOnNews(dto);
     }
 }

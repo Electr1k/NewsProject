@@ -1,5 +1,7 @@
-import {BelongsTo, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
+import {BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, Table} from "sequelize-typescript";
 import {User} from "../users/users.model";
+import {NewsReactions} from "../reactions/news-reactions.model";
+
 
 interface NewsCreationAttrs{
     title: string;
@@ -28,4 +30,7 @@ export class News extends Model<News, NewsCreationAttrs>{
 
     @BelongsTo( () => User)
     creator: User
+
+    @HasMany(() => NewsReactions, 'newsId')
+    reactions: NewsReactions[]
 }
